@@ -112,6 +112,24 @@ allow zygote tmpfs:dir r_dir_perms;
 # Let the zygote access overlays so it can initialize the AssetManager.
 get_prop(zygote, overlay_prop)
 
+# These rules are required for the storage tracer, which runs as Zygote at the
+# moment.
+#
+# TODO(?): Remove these from Zygote and have it in a separate label.
+allow zygote activity_service:service_manager find;
+allow zygote ashmem_device:chr_file execute;
+allow zygote self:capability sys_ptrace;
+allow zygote self:process execmem;
+allow zygote servicemanager:binder call;
+allow zygote system_server:binder call;
+allow zygote untrusted_app:binder call;
+allow zygote untrusted_app:process ptrace;
+allow zygote zygote_tmpfs:file execute;
+allow servicemanager zygote:dir search;
+allow servicemanager zygote:file { open read };
+allow servicemanager zygote:process getattr;
+allow system_server zygote:binder transfer;
+
 ###
 ### neverallow rules
 ###

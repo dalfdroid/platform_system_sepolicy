@@ -11,6 +11,7 @@ neverallow {
   -dumpstate
   -storaged
   -system_server
+  -zygote
   userdebug_or_eng(`-perfprofd')
 } self:capability sys_ptrace;
 
